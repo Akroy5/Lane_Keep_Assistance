@@ -15,6 +15,7 @@ A lightweight deep learning model that fuses **RGB, Radar, LiDAR, and Ultrasonic
 ---
 
 ## 🧠 Architecture
+```text
 RGB (3) + Radar (1) + LiDAR (1) + Ultrasonic (1) → 6-channel Input
 ↓
 Encoder (Conv → ReLU → BN) × 3
@@ -24,3 +25,4 @@ Bottleneck (Conv)
 Decoder (TransposeConv → ReLU) × 2
 ↓
 Sigmoid Output (1-channel mask)
+```
