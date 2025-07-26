@@ -89,13 +89,14 @@ Decoder Heads:
 ```
 
 ---
-##📊 Sample Metrics
-**Classic LKA**
+## 📊 Sample Metrics
+# **Classic LKA**
 | Split | mIoU | Pixel Acc | Steering RMSE (°) |
 | :---: | :--: | :-------: | :---------------: |
 | Train | 0.88 |    0.96   |        2.5        |
 |  Val  | 0.84 |    0.93   |        2.9        |
-**SLAM‑Enhanced LKA**
+
+# **SLAM‑Enhanced LKA**
 | Split | mIoU | Pixel Acc | Steering RMSE (°) |
 | :---: | :--: | :-------: | :---------------: |
 | Train | 0.90 |    0.97   |        2.2        |
