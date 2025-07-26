@@ -53,6 +53,7 @@ Lane_Keep_Assistance/
 ├── run_training.sh        # launch training for either mode
 ├── README.md              # this file
 └── .gitignore
+```
 --- 
 ## 🧠 Architecture Overview graph LR
   subgraph Fusion
