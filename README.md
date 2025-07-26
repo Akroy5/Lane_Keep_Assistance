@@ -56,19 +56,37 @@ Lane_Keep_Assistance/
 ```
 --- 
 ## 🧠 Architecture Overview graph LR
-  subgraph Fusion
-    rgb[RGB] --> F[SensorFusion]
-    radar[Radar] --> F
-    lidar[LiDAR] --> F
-    ultra[Ultra] --> F
-  end
-  F --> E[ResBlock×3 (dil[2,4,6])]
-  E --> B[1×1 Conv → 512 ch]
-  B --> Seg[Segmentation Head → 3‑class mask]
-  B --> Steer[Steering Head → angle]
-  classDef heads fill:#f9f,stroke:#333,stroke-width:1px;
-  class Seg,Steer heads
-
+```text
+Input (6 channels: RGB[3] + Radar[1] + LiDAR[1] + Ultrasonic[1])
+  │
+  ▼
+SensorFusionLayer
+  └─ early concatenate into a single tensor
+  │
+  ▼
+Encoder:
+  ├─ Conv2d → 64 ch, ReLU
+  ├─ Conv2d (stride=2) → 128 ch, ReLU
+  ├─ Conv2d (stride=2) → 256 ch, ReLU
+  ├─ ResidualBlock (dilation=2)
+  ├─ ResidualBlock (dilation=4)
+  └─ ResidualBlock (dilation=6)
+  │
+  ▼
+Bottleneck:
+  ├─ 1×1 Conv → 512 ch, ReLU
+  └─ 1×1 Conv → 256 ch, ReLU
+  │
+  ▼
+Decoder Heads:
+  ├─ Segmentation Head:
+  │    └─ ConvTranspose2d ×2 → upsample to input resolution
+  │    └─ 1×1 Conv → 3-class mask logits
+  │
+  └─ Steering Head:
+       └─ AdaptiveAvgPool → flatten
+       └─ MLP (256 → 128 → 1) → continuous angle output
+```
 
 ---
 ##📊 Sample Metrics
